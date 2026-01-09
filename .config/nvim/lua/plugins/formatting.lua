@@ -31,6 +31,7 @@ return {
       lua = { 'stylua' },
       python = { 'isort', 'black' },
       kotlin = { 'ktlint' },
+      rust = { 'rustfmt' },
     },
   },
 }

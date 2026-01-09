@@ -1,6 +1,5 @@
 return {
   'tpope/vim-sleuth',
-  'github/copilot.vim',
   {
     'lewis6991/gitsigns.nvim',
     opts = {
