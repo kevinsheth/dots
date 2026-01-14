@@ -4,14 +4,11 @@ return {
   build = ':TSUpdate',
   config = function()
     require('nvim-treesitter').setup({
-      install_dir = vim.fn.stdpath('data') .. '/site',
-    })
-
-    -- Install parsers
-    require('nvim-treesitter').install({
-      'bash', 'c', 'diff', 'html', 'lua', 'luadoc',
-      'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
-      'rust', 'toml'
+      ensure_installed = {
+        'bash', 'c', 'diff', 'html', 'lua', 'luadoc',
+        'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
+        'rust', 'toml'
+      },
     })
 
     -- Enable treesitter features via autocmd
