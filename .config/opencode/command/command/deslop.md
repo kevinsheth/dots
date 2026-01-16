@@ -1,4 +1,8 @@
-# Remove AI code slop
+---
+description: Deslop AI changes
+agent: general
+---
+
 
 Check the diff against main, and remove all AI generated slop introduced in this branch.
 
