@@ -3,13 +3,24 @@ return {
   lazy = false,
   build = ':TSUpdate',
   config = function()
-    require('nvim-treesitter').setup({
+    require('nvim-treesitter').setup {
       ensure_installed = {
-        'bash', 'c', 'diff', 'html', 'lua', 'luadoc',
-        'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
-        'rust', 'toml'
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'json',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'rust',
+        'toml',
       },
-    })
+    }
 
     -- Enable treesitter features via autocmd
     vim.api.nvim_create_autocmd('FileType', {

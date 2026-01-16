@@ -79,6 +79,7 @@ return {
             },
           },
         },
+        rust_analyzer = {},
       }
 
       require('mason').setup()

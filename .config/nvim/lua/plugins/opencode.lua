@@ -5,30 +5,8 @@ return {
       { 'folke/snacks.nvim', opts = { input = {}, picker = {}, terminal = {} } },
     },
     config = function()
-      local function load_opencode_commands(dir)
-        local prompts = {}
-        local ok, scandir = pcall(vim.fn.scandir, dir)
-        if not ok then
-          return prompts
-        end
-
-        for _, file in ipairs(scandir) do
-          if vim.endswith(file, '.md') or vim.endswith(file, '.txt') then
-            local name = vim.fn.fnamemodify(file, ':r')
-            local path = dir .. '/' .. file
-            local content = vim.fn.readfile(path)
-            local prompt_text = table.concat(content, '\n')
-
-            prompts[name] = { prompt = prompt_text, submit = true }
-          end
-        end
-        return prompts
-      end
-
-      local custom_commands = load_opencode_commands(vim.fn.expand '~/.opencode/opencode/commands')
-
       vim.g.opencode_opts = {
-        prompts = vim.tbl_extend('force', {
+        prompts = {
           ask_append = { prompt = '', ask = true },
           ask_this = { prompt = '@this: ', ask = true, submit = true },
           diagnostics = { prompt = 'Explain @diagnostics', submit = true },
@@ -40,7 +18,7 @@ return {
           optimize = { prompt = 'Optimize @this for performance and readability', submit = true },
           review = { prompt = 'Review @this for correctness and readability', submit = true },
           test = { prompt = 'Add tests for @this', submit = true },
-        }, custom_commands),
+        },
         select = {
           prompt = 'opencode: ',
           sections = {
