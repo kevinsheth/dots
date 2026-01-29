@@ -9,6 +9,7 @@ return {
         'c',
         'diff',
         'html',
+        'kotlin',
         'lua',
         'luadoc',
         'json',

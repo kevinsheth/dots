@@ -70,8 +70,23 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+      local util = require 'lspconfig.util'
+      -- JetBrains Kotlin LSP (kotlin-lsp); not in Mason — install via brew or standalone zip.
+      -- See https://github.com/Kotlin/kotlin-lsp#install-kotlin-lsp-cli
+      if not require('lspconfig.configs').kotlin_lsp then
+        require('lspconfig.configs').kotlin_lsp = {
+          default_config = {
+            cmd = { 'kotlin-lsp', '--stdio' },
+            filetypes = { 'kotlin' },
+            root_dir = util.root_pattern('settings.gradle.kts', 'settings.gradle', 'build.gradle.kts', 'build.gradle'),
+          },
+          docs = { description = 'JetBrains Kotlin LSP (official)' },
+        }
+      end
       local servers = {
-        kotlin_language_server = {},
+        kotlin_lsp = {
+          root_dir = util.root_pattern('settings.gradle.kts', 'settings.gradle', 'build.gradle.kts', 'build.gradle'),
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -84,19 +99,41 @@ return {
 
       require('mason').setup()
 
-      local ensure_installed = vim.tbl_keys(servers or {})
+      -- Mason has fwcd's kotlin-language-server, not JetBrains kotlin-lsp — exclude from install.
+      local ensure_installed = vim.tbl_filter(function(name)
+        return name ~= 'kotlin_lsp'
+      end, vim.tbl_keys(servers or {}))
       vim.list_extend(ensure_installed, { 'stylua' })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
+            -- Use JetBrains kotlin-lsp only; skip fwcd's kotlin_language_server if Mason has it.
+            if server_name == 'kotlin_language_server' then
+              return
+            end
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
         },
       }
+      -- JetBrains kotlin-lsp is not in Mason; set up explicitly so it attaches to Kotlin buffers.
+      -- Requires `kotlin-lsp` on PATH (brew install kotlin-lsp, or standalone zip from GitHub).
+      do
+        local kotlin = servers.kotlin_lsp
+        if kotlin and vim.fn.executable('kotlin-lsp') == 1 then
+          kotlin.capabilities = vim.tbl_deep_extend('force', {}, capabilities, kotlin.capabilities or {})
+          require('lspconfig').kotlin_lsp.setup(kotlin)
+        elseif kotlin then
+          vim.notify(
+            "JetBrains kotlin-lsp not found (not on PATH). Install: brew tap JetBrains/utils && brew install kotlin-lsp",
+            vim.log.levels.WARN,
+            { title = 'LSP' }
+          )
+        end
+      end
     end,
   },
   {
