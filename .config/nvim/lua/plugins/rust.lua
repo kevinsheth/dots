@@ -197,12 +197,12 @@ return {
     },
   },
 
-  -- Mason for installing codelldb
+  -- Mason for installing codelldb and rust-analyzer
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { 'codelldb' })
+      vim.list_extend(opts.ensure_installed, { 'codelldb', 'rust-analyzer' })
     end,
   },
 }
