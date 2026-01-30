@@ -22,5 +22,12 @@
       "type": "remote",
       "url": "https://mcp.context7.com/mcp"
     }
-  }
+  },
+  "permission": {
+    "bash": {
+      "rm *": "ask",
+      "git push *": "ask",
+      "git commit *": "ask",
+    },
+  },
 }
