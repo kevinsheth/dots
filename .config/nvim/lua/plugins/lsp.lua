@@ -94,6 +94,36 @@ return {
             },
           },
         },
+        gopls = {
+          root_dir = util.root_pattern('go.work', 'go.mod', '.git'),
+          settings = {
+            gopls = {
+              gofumpt = true,
+              completeUnimported = true,
+              usePlaceholders = true,
+              staticcheck = false,
+              analyses = {
+                unusedparams = true,
+                shadow = true,
+                nilness = true,
+                unusedwrite = true,
+                useany = true,
+              },
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+            },
+          },
+        },
+        golangci_lint_ls = {
+          root_dir = util.root_pattern('go.work', 'go.mod', '.git'),
+        },
       }
 
       require('mason').setup()
@@ -102,7 +132,15 @@ return {
       local ensure_installed = vim.tbl_filter(function(name)
         return name ~= 'kotlin_lsp'
       end, vim.tbl_keys(servers or {}))
-      vim.list_extend(ensure_installed, { 'stylua' })
+      vim.list_extend(ensure_installed, {
+        'stylua',
+        'gopls',
+        'golangci-lint',
+        'golangci-lint-langserver',
+        'goimports',
+        'gofumpt',
+        'delve',
+      })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
