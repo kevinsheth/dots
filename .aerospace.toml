@@ -1,5 +1,4 @@
 start-at-login = true
-after-startup-command = ['exec-and-forget borders style=round width=5.0 active_color=0xff7aa2f7 inactive_color=0xff3b4252']
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 enable-normalization-flatten-containers = true
@@ -15,7 +14,10 @@ outer.right = 10
 
 [mode.main.binding]
 alt-enter = 'exec-and-forget open -na "Ghostty"'
-alt-shift-enter = 'exec-and-forget open -a "Google Chrome"'
+alt-shift-enter = "exec-and-forget osascript -e 'tell application \"Google Chrome\" to make new window' -e 'tell application \"Google Chrome\" to activate'"
+alt-shift-m = 'exec-and-forget open -a "Music"'
+alt-shift-g = "exec-and-forget osascript -e 'tell application \"Google Chrome\" to open location \"https://github.com\"' -e 'tell application \"Google Chrome\" to activate'"
+alt-shift-s = "exec-and-forget osascript -e 'tell application \"Google Chrome\" to open location \"https://app.shortcut.com\"' -e 'tell application \"Google Chrome\" to activate'"
 alt-space = 'exec-and-forget open -a "Raycast"'
 alt-cmd-b = 'exec-and-forget open "x-apple.systempreferences:com.apple.BluetoothSettings"'
 alt-slash = 'layout tiles horizontal vertical'
@@ -42,9 +44,9 @@ alt-ctrl-l = 'resize width +70'
 alt-minus = 'resize smart -60'
 alt-equal = 'resize smart +60'
 alt-shift-equal = 'resize smart +60'
-cmd-minus = 'resize smart -60'
-cmd-equal = 'resize smart +60'
-cmd-shift-equal = 'resize smart +60'
+cmd-minus = 'resize width -60'
+cmd-equal = 'resize width +60'
+cmd-shift-equal = 'resize width +60'
 
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
