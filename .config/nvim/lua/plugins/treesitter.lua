@@ -3,7 +3,12 @@ return {
   lazy = false,
   build = ':TSUpdate',
   config = function()
-    require('nvim-treesitter.configs').setup({
+    local ok, ts = pcall(require, 'nvim-treesitter.configs')
+    if not ok then
+      ts = require('nvim-treesitter')
+    end
+
+    ts.setup({
       ensure_installed = {
         'bash',
         'c',
