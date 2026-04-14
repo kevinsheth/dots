@@ -6,6 +6,7 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 - `.config/nvim/` - Neovim configuration
 - `.ideavimrc` - IdeaVim configuration for JetBrains IDEs
+- `.aerospace.toml` - AeroSpace window manager config (macOS)
 
 ## Setup
 
@@ -36,6 +37,7 @@ sudo pacman -S stow
    ```bash
    rm -rf ~/.config/nvim
    rm -f ~/.ideavimrc
+   rm -f ~/.aerospace.toml
    ```
 
 3. Run stow:
@@ -43,6 +45,29 @@ sudo pacman -S stow
    cd ~/dot-vault
    stow -t ~ .
    ```
+
+### macOS window manager setup (Omarchy-style)
+
+This repo includes an AeroSpace config with Omarchy-like behavior:
+
+- `alt-h/j/k/l` focus windows
+- `alt-shift-h/j/k/l` move windows
+- `alt-1..0` switch workspaces
+- `alt-shift-1..0` move window to workspace
+- `alt-space` opens Raycast
+
+After stow, run:
+
+```bash
+aerospace reload-config
+```
+
+Then in macOS settings, ensure both **AeroSpace** and **Raycast** have:
+
+- Accessibility permission
+- Login item enabled
+
+Raycast does not require a separate dotfile to match this workflow; it works out of the box once the global hotkey is set in Raycast settings.
 
 ### Updating
 
