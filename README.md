@@ -2,15 +2,13 @@
 
 Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-## Contents
+## Layout
 
-- `.config/nvim/` - Neovim configuration
-- `.ideavimrc` - IdeaVim configuration for JetBrains IDEs
-- `.aerospace.toml` - AeroSpace window manager config (macOS)
+- `shared/` - configs used on both work and personal machines
+- `work/` - macOS/work-only configs and Homebrew bootstrap
+- `personal/` - personal/Omarchy-only configs
 
-## Setup
-
-### Prerequisites
+## Prerequisites
 
 Install GNU Stow:
 
@@ -25,65 +23,72 @@ sudo apt install stow
 sudo pacman -S stow
 ```
 
-### Installation
+## Bootstrap
 
-1. Clone this repo to your home directory:
-   ```bash
-   cd ~
-   git clone https://github.com/kevinsheth/dots.git dot-vault
-   ```
+### Work machine (macOS)
 
-2. Remove any existing configs that would conflict:
-   ```bash
-   rm -rf ~/.config/nvim
-   rm -f ~/.ideavimrc
-   rm -f ~/.aerospace.toml
-   ```
+Install apps/tools from Homebrew:
 
-3. Run stow:
-   ```bash
-   cd ~/dot-vault
-   stow -t ~ .
-   ```
+```bash
+cd ~/dots
+brew bundle --file work/Brewfile
+brew bundle check --file work/Brewfile
+```
 
-### macOS window manager setup (Omarchy-style)
+Stow shared + work configs:
 
-This repo includes an AeroSpace config with Omarchy-like behavior:
+```bash
+cd ~/dots
+stow -t ~ --ignore='^Brewfile$' shared work
+```
 
-- `alt-h/j/k/l` focus windows
-- `alt-shift-h/j/k/l` move windows
-- `alt-1..0` switch workspaces
-- `alt-shift-1..0` move window to workspace
-- `alt-space` opens Raycast
+### Personal machine (Omarchy)
 
-After stow, run:
+No Homebrew bootstrap is used. Stow shared + personal configs:
+
+```bash
+cd ~/dots
+stow -t ~ shared personal
+```
+
+## AeroSpace and Karabiner (work)
+
+After stowing on macOS, reload AeroSpace config:
 
 ```bash
 aerospace reload-config
 ```
 
-Then in macOS settings, ensure both **AeroSpace** and **Raycast** have:
+In macOS System Settings, grant **Accessibility** permission and enable **Login Item** for:
 
-- Accessibility permission
-- Login item enabled
+- AeroSpace
+- Karabiner-Elements
+- Raycast
 
-Raycast does not require a separate dotfile to match this workflow; it works out of the box once the global hotkey is set in Raycast settings.
+Karabiner config is tracked at `work/.config/karabiner/karabiner.json`.
 
-### Updating
+## Updating
 
-Changes made to files in `~/.config/nvim/` or `~/dot-vault/.config/nvim/` are the same (symlinked). To sync changes:
+Edit files in `~/dots`, then commit and push:
 
 ```bash
-cd ~/dot-vault
-git add -A && git commit -m "update config"
+cd ~/dots
+git add -A && git commit -m "update dotfiles"
 git push
 ```
 
-### Uninstalling
+## Uninstalling symlinks
 
-To remove the symlinks:
+Work machine:
 
 ```bash
-cd ~/dot-vault
-stow -t ~ -D .
+cd ~/dots
+stow -t ~ -D --ignore='^Brewfile$' shared work
+```
+
+Personal machine:
+
+```bash
+cd ~/dots
+stow -t ~ -D shared personal
 ```
