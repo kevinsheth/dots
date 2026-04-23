@@ -90,3 +90,11 @@ run = ['layout floating']
 [[on-window-detected]]
 if.app-id = 'com.raycast.macos'
 run = ['layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['layout tiling']
+
+[[on-window-detected]]
+if.app-id = 'com.electron.kumospace'
+run = ['layout tiling']
