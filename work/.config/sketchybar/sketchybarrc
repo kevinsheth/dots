@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+
+FONT_PRIMARY="SF Pro Text:Semibold:12.0"
+
+export BAR_BG=0xe0111c18
+export BAR_BORDER=0xff53685b
+export ITEM_BG=0xd923372b
+export ITEM_BG_FOCUSED=0xff509475
+export ITEM_BORDER=0xff53685b
+export ICON_COLOR=0xffc1c497
+export ICON_COLOR_FOCUSED=0xff111c18
+export LABEL_COLOR=0xffc1c497
+export ACCENT=0xff509475
+
+bar=()
+bar+=(position=top)
+bar+=(height=34)
+bar+=(corner_radius=10)
+bar+=(y_offset=6)
+bar+=(margin=10)
+bar+=(padding_left=10)
+bar+=(padding_right=10)
+bar+=(color=$BAR_BG)
+bar+=(border_width=1)
+bar+=(border_color=$BAR_BORDER)
+bar+=(blur_radius=24)
+bar+=(shadow=on)
+bar+=(sticky=on)
+bar+=(topmost=window)
+bar+=(notch_display_height=0)
+bar+=(font_smoothing=on)
+bar+=(display=all)
+
+sketchybar --bar "${bar[@]}"
+
+sketchybar --add event display_change
+
+sketchybar --add item display_mode_helper q
+sketchybar --set display_mode_helper \
+  drawing=off \
+  script="$PLUGIN_DIR/display_mode.sh"
+sketchybar --subscribe display_mode_helper display_change system_woke
+
+default_item=()
+default_item+=(background.color=$ITEM_BG)
+default_item+=(background.corner_radius=8)
+default_item+=(background.height=26)
+default_item+=(background.border_width=1)
+default_item+=(background.border_color=$ITEM_BORDER)
+default_item+=(icon.font="$FONT_PRIMARY")
+default_item+=(icon.color=$ICON_COLOR)
+default_item+=(label.font="$FONT_PRIMARY")
+default_item+=(label.color=$LABEL_COLOR)
+default_item+=(label.padding_left=6)
+default_item+=(label.padding_right=10)
+default_item+=(icon.padding_left=10)
+default_item+=(icon.padding_right=6)
+default_item+=(padding_left=5)
+default_item+=(padding_right=5)
+default_item+=(scroll_texts=on)
+default_item+=(updates=when_shown)
+
+sketchybar --default "${default_item[@]}"
+
+for sid in 1 2 3 4 5 6 7 8 9 10; do
+  sketchybar --add item "space.$sid" left \
+             --set "space.$sid" \
+                icon="$sid" \
+               icon.font="$FONT_PRIMARY" \
+               icon.padding_left=9 \
+               icon.padding_right=9 \
+               label.drawing=off \
+               background.corner_radius=8 \
+               background.height=26 \
+               click_script="aerospace workspace $sid" \
+               script="$PLUGIN_DIR/space.sh $sid"
+done
+
+sketchybar --add item spaces.separator left \
+           --set spaces.separator \
+             icon="|" \
+             icon.color=$BAR_BORDER \
+             label.drawing=off \
+             background.drawing=off \
+             padding_left=8 \
+             padding_right=8
+
+sketchybar --add item front_app center \
+           --set front_app \
+             icon="APP" \
+             icon.font="$FONT_PRIMARY" \
+             background.padding_left=10 \
+             background.padding_right=10 \
+             label.max_chars=56 \
+             script="$PLUGIN_DIR/front_app.sh" \
+             update_freq=2
+
+sketchybar --add item music center \
+           --set music \
+             icon="MUS" \
+             icon.font="$FONT_PRIMARY" \
+             background.padding_left=8 \
+             background.padding_right=10 \
+             label.max_chars=44 \
+             script="$PLUGIN_DIR/music.sh" \
+             update_freq=5 \
+             click_script='osascript -e "tell application \"Music\" to playpause"'
+
+sketchybar --add item right.separator right \
+           --set right.separator \
+             icon="|" \
+             icon.color=$BAR_BORDER \
+             label.drawing=off \
+             background.drawing=off \
+             padding_left=8 \
+             padding_right=8
+
+sketchybar --add item cpu right \
+           --set cpu \
+             icon="CPU" \
+             icon.font="$FONT_PRIMARY" \
+             background.padding_left=8 \
+             script="$PLUGIN_DIR/cpu.sh" \
+             update_freq=5
+
+sketchybar --add item battery right \
+           --set battery \
+             icon="BAT" \
+             icon.font="$FONT_PRIMARY" \
+             background.padding_left=8 \
+             script="$PLUGIN_DIR/battery.sh" \
+             update_freq=20
+
+sketchybar --add item clock right \
+           --set clock \
+             icon="TIME" \
+             icon.font="$FONT_PRIMARY" \
+             background.padding_left=8 \
+             background.padding_right=10 \
+             script="$PLUGIN_DIR/clock.sh" \
+             update_freq=10
+
+sketchybar --add event aerospace_workspace_change
+sketchybar --add event music_change com.apple.Music.playerInfo
+
+for sid in 1 2 3 4 5 6 7 8 9 10; do
+  sketchybar --subscribe "space.$sid" aerospace_workspace_change
+done
+
+sketchybar --subscribe front_app front_app_switched
+sketchybar --subscribe music music_change system_woke
+sketchybar --subscribe cpu system_woke
+sketchybar --subscribe battery system_woke power_source_change
+sketchybar --subscribe clock system_woke
+
+sketchybar --update
+sketchybar --trigger display_change
+sketchybar --trigger aerospace_workspace_change
