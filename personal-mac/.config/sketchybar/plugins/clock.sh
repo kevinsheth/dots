@@ -1,2 +1,4 @@
-#!/bin/bash
-sketchybar --set "$NAME" label="$(date '+%a %b %d  %H:%M')"
+#!/usr/bin/env bash
+
+now=$(date '+%a %b %-d  %H:%M')
+sketchybar --set "$NAME" label="$now"

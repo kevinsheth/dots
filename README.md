@@ -5,8 +5,9 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 ## Layout
 
 - `shared/` - configs used on both work and personal machines
-- `work/` - macOS/work-only configs and Homebrew bootstrap
-- `personal/` - personal/Omarchy-only configs
+- `work/` - work-only configs (macOS)
+- `personal-mac/` - personal macOS-only configs
+- `personal-omarchy/` - personal Omarchy-only configs
 
 ## Prerequisites
 
@@ -42,13 +43,20 @@ cd ~/dots
 stow -t ~ --ignore='^Brewfile$' shared work
 ```
 
-### Personal machine (Omarchy)
-
-No Homebrew bootstrap is used. Stow shared + personal configs:
+If this is a personal macOS machine, stow `personal-mac` instead of `work`:
 
 ```bash
 cd ~/dots
-stow -t ~ shared personal
+stow -t ~ shared personal-mac
+```
+
+### Personal machine (Omarchy)
+
+No Homebrew bootstrap is used. Stow shared + Omarchy personal configs:
+
+```bash
+cd ~/dots
+stow -t ~ shared personal-omarchy
 ```
 
 ## AeroSpace and Karabiner (work)
@@ -90,5 +98,5 @@ Personal machine:
 
 ```bash
 cd ~/dots
-stow -t ~ -D shared personal
+stow -t ~ -D shared personal-omarchy
 ```

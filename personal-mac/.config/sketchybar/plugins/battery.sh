@@ -1,16 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-PERCENT="$(pmset -g batt | grep -Eo '[0-9]+%' | tr -d '%')"
-STATUS="$(pmset -g batt)"
+battery_info=$(pmset -g batt)
+percent=$(echo "$battery_info" | grep -Eo '[0-9]+%' | head -n1)
+state=$(echo "$battery_info" | grep -Eo 'charging|discharging|charged|AC attached' | head -n1)
 
-ICON=""
-if [[ "$PERCENT" -lt 80 ]]; then ICON=""; fi
-if [[ "$PERCENT" -lt 60 ]]; then ICON=""; fi
-if [[ "$PERCENT" -lt 40 ]]; then ICON=""; fi
-if [[ "$PERCENT" -lt 20 ]]; then ICON=""; fi
-
-if echo "$STATUS" | grep -qi "charging"; then
-  ICON=""
+icon="BAT"
+if [ "$state" = "charging" ] || [ "$state" = "AC attached" ]; then
+  icon="CHG"
 fi
 
-sketchybar --set "$NAME" icon="$ICON" label="${PERCENT}%"
+if [ -z "$percent" ]; then
+  percent="--%"
+fi
+
+sketchybar --set "$NAME" icon="$icon" label="$percent"
