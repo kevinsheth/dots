@@ -5,6 +5,6 @@ end
 if status is-interactive
     atuin init fish | source
     if command -q try
-        try init ~/src/tries | source
+        try init fish ~/src/tries | source
     end
 end
