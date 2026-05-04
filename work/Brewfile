@@ -22,6 +22,8 @@ brew "kotlin-lsp"
 brew "rtk"
 brew "cloud-sql-proxy"
 brew "stellar-cli"
+brew "solana"
+brew "sui"
 brew "rustup-init"
 brew "postgresql"
 
