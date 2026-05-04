@@ -59,7 +59,7 @@ cd ~/dots
 stow -t ~ shared personal-omarchy
 ```
 
-## AeroSpace and Karabiner (work)
+## AeroSpace and Keyboard Modifiers (work)
 
 After stowing on macOS, reload AeroSpace config:
 
@@ -70,10 +70,12 @@ aerospace reload-config
 In macOS System Settings, grant **Accessibility** permission and enable **Login Item** for:
 
 - AeroSpace
-- Karabiner-Elements
 - Raycast
 
-Karabiner config is tracked at `work/.config/karabiner/karabiner.json`.
+For a Windows-layout keyboard, use **System Settings → Keyboard → Keyboard Shortcuts → Modifier Keys** and swap Command/Option for that keyboard:
+
+- **Option Key** → `Command`
+- **Command Key** → `Option`
 
 ## Updating
 
