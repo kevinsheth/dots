@@ -3,6 +3,7 @@ fish_add_path /opt/homebrew/bin /opt/homebrew/sbin
 fish_add_path /opt/homebrew/opt/openjdk@17/bin
 fish_add_path /opt/homebrew/share/google-cloud-sdk/bin
 fish_add_path ~/go/bin
+fish_add_path ~/.local/bin
 
 if status is-interactive
 # Commands to run in interactive sessions can go here
