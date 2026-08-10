@@ -40,7 +40,7 @@ Choose the appropriate test type based on what's being tested:
 - End-to-end flows that touch the database
 - When verifying data persistence is critical
 
-Never skip testing because it's difficult. This is financial software - accuracy matters.
+Never skip testing because it's difficult. Accuracy matters.
 
 ### 4. Present Test Plan
 Before writing any code, show the user:
@@ -69,7 +69,7 @@ After approval:
 
 **No shortcuts**: If something interacts with the database, write a database test. If it's a critical edge case, test it even if it's hard.
 
-**Edge cases matter**: This code handles money. Test boundary conditions, zero values, precision edge cases, and failure modes.
+**Edge cases matter**: Test boundary conditions, zero values, precision edge cases, and failure modes.
 
 ## Anti-Patterns to Avoid
 

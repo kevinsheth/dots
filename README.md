@@ -5,7 +5,7 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 ## Layout
 
 - `shared/` - configs used on both work and personal machines
-- `work/` - work-only configs (macOS)
+- `work/` - work-only Homebrew manifest (macOS)
 - `personal-mac/` - personal macOS-only configs
 - `personal-omarchy/` - personal Omarchy-only configs
 
@@ -36,18 +36,18 @@ brew bundle --file work/Brewfile
 brew bundle check --file work/Brewfile
 ```
 
-Stow shared + work configs:
+Stow shared configs:
 
 ```bash
 cd ~/dots
-stow -t ~ --ignore='^Brewfile$' shared work
+stow -t ~ shared
 ```
 
-If this is a personal macOS machine, stow `personal-mac` instead of `work`:
+If this is a personal macOS machine, stow shared + personal configs:
 
 ```bash
 cd ~/dots
-stow -t ~ shared personal-mac
+stow -t ~ --ignore='^Brewfile$' shared personal-mac
 ```
 
 ### Personal machine (Omarchy)
@@ -58,24 +58,6 @@ No Homebrew bootstrap is used. Stow shared + Omarchy personal configs:
 cd ~/dots
 stow -t ~ shared personal-omarchy
 ```
-
-## AeroSpace and Keyboard Modifiers (work)
-
-After stowing on macOS, reload AeroSpace config:
-
-```bash
-aerospace reload-config
-```
-
-In macOS System Settings, grant **Accessibility** permission and enable **Login Item** for:
-
-- AeroSpace
-- Raycast
-
-For a Windows-layout keyboard, use **System Settings → Keyboard → Keyboard Shortcuts → Modifier Keys** and swap Command/Option for that keyboard:
-
-- **Option Key** → `Command`
-- **Command Key** → `Option`
 
 ## Updating
 
@@ -93,12 +75,19 @@ Work machine:
 
 ```bash
 cd ~/dots
-stow -t ~ -D --ignore='^Brewfile$' shared work
+stow -t ~ -D shared
 ```
 
-Personal machine:
+Personal Omarchy machine:
 
 ```bash
 cd ~/dots
 stow -t ~ -D shared personal-omarchy
+```
+
+Personal macOS machine:
+
+```bash
+cd ~/dots
+stow -t ~ -D --ignore='^Brewfile$' shared personal-mac
 ```

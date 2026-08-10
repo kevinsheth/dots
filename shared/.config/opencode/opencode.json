@@ -6,10 +6,6 @@
     }
   },
   "mcp": {
-    "shortcut": {
-      "url": "https://mcp.shortcut.com/mcp",
-      "type": "remote"
-    },
     "grep_app": {
       "type": "remote",
       "url": "https://mcp.grep.app"
