@@ -66,3 +66,4 @@ Use `load skill <name>` to activate:
 - **mentor** - Code review mentor (teaches without writing code)
 - **verify-mocks** - Verify test mocks match production data
 - **clean-agents** - Refactor AGENTS.md for progressive disclosure
+- Every code change in every project must load and follow the ub-mode skill (skills/ub-mode/SKILL.md): First Make it Work, Then Make it Right, Follow Practice.
