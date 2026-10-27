@@ -10,7 +10,7 @@ All code should look human-written. Remove:
 - Style inconsistent with surrounding code
 
 ### Testing Philosophy
-- This is financial software - never skip tests because they're hard
+- Never skip tests because they're hard
 - Follow existing patterns exactly, no clever abstractions
 - Test edge cases: boundary conditions, zero values, precision, failure modes
 - Integration tests for anything touching database
